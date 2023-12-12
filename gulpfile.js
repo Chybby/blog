@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var sass = require('gulp-sass');
+var sass = require('gulp-sass')(require('sass'));
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
 var cssnano = require('gulp-cssnano');
@@ -10,41 +10,62 @@ var del = require('del');
 var rev = require('gulp-rev');
 var revdel = require('gulp-rev-delete-original');
 
-gulp.task('default', ['clean', 'css', 'js', 'rev']);
+var paths = {
+    styles: {
+        src: 'css/blog.scss',
+        dest: 'static/css/'
+    },
+    scripts: {
+        src: 'js/*.js',
+        dest: 'static/js/'
+    }
+};
 
-gulp.task('clean', function() {
-    return del(['static/css', 'static/js']);
-});
+function clean() {
+    return del([paths.styles.dest, paths.scripts.dest]);
+}
 
-gulp.task('css', ['clean'], function() {
-    return gulp.src('css/blog.scss')
-    .pipe(sass())
-    .pipe(autoprefixer('last 2 version'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(cssnano())
-    .pipe(gulp.dest('static/css'))
-    .pipe(notify({ message: 'CSS task complete' }));
-});
+function styles() {
+    return gulp.src(paths.styles.src)
+        .pipe(sass())
+        .pipe(autoprefixer('last 2 version'))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(cssnano())
+        .pipe(gulp.dest(paths.styles.dest))
+        .pipe(notify({ message: 'Styles task complete' }));
+}
 
-gulp.task('js', ['clean'], function() {
-    return gulp.src('js/*.js')
-    .pipe(concat('blog.js'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
-    .pipe(gulp.dest('static/js'))
-    .pipe(notify({message: 'JS task complete'}));
-});
+function scripts() {
+    return gulp.src(paths.scripts.src)
+        .pipe(concat('blog.js'))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(uglify())
+        .pipe(gulp.dest(paths.scripts.dest))
+        .pipe(notify({ message: 'Scripts task complete' }));
+}
 
-gulp.task('rev', ['css', 'js'], function() {
-    return gulp.src(['static/css/*', 'static/js/*'], {base: 'static'})
-    .pipe(rev())
-    .pipe(revdel())
-    .pipe(gulp.dest('static'))
-    .pipe(rev.manifest({merge: true}))
-    .pipe(gulp.dest(process.cwd()))
-});
+function rev_manifest() {
+    return gulp.src(['static/css/*', 'static/js/*'], { base: 'static' })
+        .pipe(rev())
+        .pipe(revdel())
+        .pipe(gulp.dest('static'))
+        .pipe(rev.manifest({ merge: true }))
+        .pipe(gulp.dest(process.cwd()));
+}
 
-gulp.task('watch', function() {
-    gulp.watch('css/*.scss', ['rev']);
-    gulp.watch('js/*.js', ['rev']);
-});
+var build = gulp.series(clean, gulp.parallel(styles, scripts), rev_manifest);
+
+function watch() {
+    gulp.watch('css/*.scss', build);
+    gulp.watch(paths.scripts.src, build);
+}
+
+
+exports.clean = clean;
+exports.styles = styles;
+exports.scripts = scripts;
+exports.rev_manifest = rev_manifest;
+exports.watch = watch;
+exports.build = build;
+
+exports.default = build;

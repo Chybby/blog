@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}{{ post.title }} - Adam Chyb: Blog{% endblock %}
+{% block title %}{{ post.title }} - dome's blog{% endblock %}
 
 {% block content %}
-    <div class="main-content">
-        <div>
-            {{ post.contents }}
+    <article class="post column">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <time datetime="{{ post.created_at_datetime }}">{{ post.created_at_display }}</time>
+        <div class="post-contents markdown">
+            {{ post.html_contents | safe }}
         </div>
-    </div>
+    </article>
 {% endblock %}
