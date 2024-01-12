@@ -1,0 +1,31 @@
+---
+import type { Page } from 'astro'
+
+interface Props {
+    page: Page
+}
+
+const { page } = Astro.props
+
+const pages = Array.from({length: page.lastPage}, (_, i) => i + 1)
+---
+
+<style>
+	div {
+		display: flex;
+		justify-content: center;
+        gap: 10px;
+	}
+
+    .button.focused {
+        background-color: var(--button-highlight-color);
+    }
+</style>
+
+<div>
+    {page.currentPage != 1 && <a class="button" href={page.url.prev}>Previous</a>}
+    {pages.map((pageNo) =>
+        <a class={ pageNo == page.currentPage ? "button focused" : "button" } href=`${pageNo}`>{pageNo}</a>
+    )}
+    {page.currentPage != page.lastPage && <a class="button" href={page.url.next}>Next</a>}
+</div>

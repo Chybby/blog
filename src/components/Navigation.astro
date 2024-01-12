@@ -1,0 +1,80 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Social from '@components/Social.astro';
+import Hamburger from '@components/Hamburger.astro';
+
+type Props = Record<string, never>;
+---
+
+<style>
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin: 20px 0;
+    }
+
+    nav {
+        display: none;
+        position: relative;
+        z-index: 1;
+        flex-direction: column;
+        border-radius: 20px;
+        background-color: var(--button-background-color);
+        border: 10px solid var(--button-background-color);
+    }
+
+    nav > a {
+        display: flex;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    nav .social-links {
+        display: flex;
+        justify-content: center;
+    }
+
+    nav .social-links > * {
+        padding: 10px;
+    }
+
+    nav [data-icon] {
+        position: relative;
+        top: 0.25em;
+    }
+
+    .expanded {
+        display: flex;
+    }
+
+    @media screen and (min-width: 675px) {
+        nav {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            position: static;
+            width: auto;
+            align-items: center;
+        }
+
+        .hamburger {
+            display: none;
+        }
+    }
+</style>
+
+<div class="nav-links">
+    <Hamburger />
+    <nav>
+        <a class="button" href="/tags/">Tags</a>
+        <div class="social-links">
+            <Social url="https://github.com/chybby" icon="mdi:github" />
+            <Social url="https://www.linkedin.com/in/achyb/" icon="mdi:linkedin" />
+            <Social url="https://chybby.itch.io/" icon="cib:itch-io" />
+        </div>
+        <a class="button" href="https://chybby.com">chybby.com <Icon name="mdi:open-in-new" /></a>
+    </nav>
+</div>

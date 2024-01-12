@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import BlogPostPreview from "@components/BlogPostPreview.astro";
+
+const allPosts = await getCollection("posts");
+
+//TODO: use tailwind
+---
+
+<style>
+	div {
+		display: flex;
+		justify-content: center;
+	}
+</style>
+
+<BaseLayout pageTitle="Recent posts">
+	{allPosts
+		.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+		.slice(0, 3)
+		.map((post) => <BlogPostPreview post={post} />)
+	}
+
+	<div>
+		<a class="button" href="/posts/1">See more posts</a>
+	</div>
+</BaseLayout>

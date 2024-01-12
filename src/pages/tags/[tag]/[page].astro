@@ -1,0 +1,38 @@
+---
+import type { InferGetStaticParamsType, InferGetStaticPropsType, GetStaticPaths } from 'astro';
+
+import { getCollection } from "astro:content";
+
+import PageNavigation from '@components/PageNavigation.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BlogPostPreview from '@components/BlogPostPreview.astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const blogPosts = await getCollection("posts");
+    blogPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+    const uniqueTags: string[] = [...new Set(blogPosts.map((post) => post.data.tags).flat())];
+
+    return uniqueTags.flatMap((tag) => {
+        const filteredPosts = blogPosts.filter((post) => post.data.tags.includes(tag));
+        return paginate(filteredPosts, {
+            params: { tag },
+            pageSize: 5,
+        });
+    });
+}) satisfies GetStaticPaths;
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { tag } = Astro.params as Params;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { page } = Astro.props;
+---
+
+<BaseLayout pageTitle={`Tagged with "${tag}"`}>
+    {page.data
+        .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+        .map((post) => <BlogPostPreview post={post}/>)
+    }
+
+    <PageNavigation page={page} />
+</BaseLayout>

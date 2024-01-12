@@ -1,0 +1,34 @@
+---
+import Navigation from '@components/Navigation.astro'
+import ThemeIcon from '@components/ThemeIcon.astro'
+
+type Props = Record<string, never>;
+---
+
+<style>
+    header {
+        height: var(--header-height);
+        padding: 0 20px;
+    }
+
+    .page-title {
+        margin: auto 0;
+        float: left;
+    }
+
+    header a {
+        text-decoration: none;
+        font-size: 2em;
+        font-weight: bold;
+        color: var(--button-font-color);
+    }
+</style>
+
+<header>
+    <div class="page-title">
+        <a href="/">Dome's Blog</a>
+        <ThemeIcon />
+    </div>
+
+    <Navigation />
+</header>

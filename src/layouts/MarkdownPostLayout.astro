@@ -1,0 +1,55 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import Tag from '@components/Tag.astro';
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+interface Props {
+    post: CollectionEntry<'posts'>;
+    children: any;
+}
+
+const { post } = Astro.props;
+const frontmatter = post.data;
+---
+
+<style>
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .metadata {
+        color: var(--muted-font-color);
+        font-size: 0.9em;
+    }
+
+    .divider {
+        padding: 0 1ch;
+        font-weight: bold;
+    }
+
+    br {
+        display: block;
+        content: "";
+        margin-top: 60px;
+    }
+</style>
+
+<BaseLayout pageTitle={frontmatter.title}>
+    <div class="metadata">
+        <time>{frontmatter.pubDate.toDateString()}</time> <span class="divider">·</span> <span>{frontmatter.author}</span>
+    </div>
+
+    <br>
+
+    <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
+
+    <slot />
+
+    <div class="tags">
+        {frontmatter.tags.map((tag) => (
+            <Tag name={tag} />
+        ))}
+    </div>
+</BaseLayout>

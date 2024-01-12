@@ -1,0 +1,31 @@
+---
+type Props = Record<string, never>;
+
+// TODO: make this an svg. maybe tailwind has a hamburger menu?
+---
+
+<style>
+    div {
+        cursor: pointer;
+    }
+
+    div span {
+        display: block;
+        width: 40px;
+        height: 5px;
+        margin-bottom: 10px;
+        background-color: var(--font-color);
+    }
+
+    @media screen and (min-width: 675px) {
+        div {
+            display: none;
+        }
+    }
+</style>
+
+<div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>

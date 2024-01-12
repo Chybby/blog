@@ -1,0 +1,27 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+
+import { getCollection } from "astro:content";
+
+import PageNavigation from '@components/PageNavigation.astro';
+import BaseLayout from "@layouts/BaseLayout.astro";
+import BlogPostPreview from '@components/BlogPostPreview.astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const blogPosts = await getCollection("posts");
+
+    blogPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+
+    return paginate(blogPosts, {pageSize: 5});
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { page } = Astro.props;
+---
+
+<BaseLayout pageTitle="All posts">
+	{page.data.map((post) => <BlogPostPreview post={post} />)}
+
+    <PageNavigation page={page} />
+</BaseLayout>

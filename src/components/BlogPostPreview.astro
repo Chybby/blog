@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    post: CollectionEntry<'posts'>
+}
+
+const { post } = Astro.props
+---
+
+<style>
+    a {
+        display: block;
+        text-decoration: none;
+        margin: 40px 10px;
+    }
+
+    h2 {
+        margin-bottom: 0;
+    }
+
+    time {
+        color: var(--muted-font-color);
+    }
+
+    p {
+        margin: 0;
+        color: var(--font-color);
+    }
+</style>
+
+<a href={`/posts/${post.slug}/`}>
+    <h2>{post.data.title}</h2>
+    <time>{post.data.pubDate.toDateString()}</time>
+    <p>{post.data.description}</p>
+</a>

@@ -1,0 +1,18 @@
+---
+type Props = Record<string, never>;
+---
+
+<style>
+  footer {
+    height: var(--footer-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+    color: var(--muted-font-color);
+  }
+</style>
+
+<footer>
+  <p>© {new Date().getFullYear()} Dome - Built with <a href="https://astro.build/">Astro</a></p>
+</footer>

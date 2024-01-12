@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    --header-height: 100px;
+    --footer-height: 60px;
+
+    /* Light mode colors */
+    --button-font-color: #10395d;
+    --button-background-color: #cde0f1;
+    --button-highlight-color: #9ac6ed;
+
+    --font-color: #000;
+
+    --muted-font-color: #4d7293;
+    background-color: #f1f5f9;
+    color: var(--font-color);
+
+    font-family: sans-serif;
+}
+
+html.dark {
+    /* Dark mode colors */
+    --button-font-color: #e1d6ff;
+    --button-background-color: #302c3b;
+    --button-highlight-color: #3e3655;
+
+    --font-color: #fff;
+
+    --muted-font-color: #9388af;
+
+    background-color: #232129;
+    color: var(--font-color);
+}
+
+.dark a {
+    color: #81d7ff;
+}
+
+.dark a:visited {
+    color: #d181ff;
+}
+
+.button, .dark .button {
+    color: var(--button-font-color);
+    background-color: var(--button-background-color);
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.button:visited, .dark .button:visited {
+    color: var(--button-font-color);
+}
+
+.button:hover,
+.button:focus {
+    background-color: var(--button-highlight-color);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+img {
+    margin: auto;
+    display: block;
+}
