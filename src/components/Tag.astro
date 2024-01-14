@@ -1,24 +1,11 @@
 ---
+import Button from "./Button.astro";
+
 interface Props {
-    name: string
+  name: string;
 }
 
-const { name } = Astro.props
+const { name } = Astro.props;
 ---
 
-<style>
-    p {
-        margin: 0.25em;
-        border: dotted 1px #a1a1a1;
-        border-radius: .5em;
-        padding: .5em 1em;
-        font-size: 1.15em;
-        background-color: #F8FCFD;
-    }
-
-    p a {
-        color: #00539F;
-    }
-</style>
-
-<p><a href={`/tags/${name}/1`}>{name}</a></p>
+<Button href={`/tags/${name}/1`} text=`#${name}` />

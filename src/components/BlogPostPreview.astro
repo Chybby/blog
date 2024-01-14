@@ -1,36 +1,59 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-    post: CollectionEntry<'posts'>
+  post: CollectionEntry<"posts">;
 }
 
-const { post } = Astro.props
+const { post } = Astro.props;
 ---
 
-<style>
-    a {
-        display: block;
-        text-decoration: none;
-        margin: 40px 10px;
-    }
+<a
+  class="group my-4 flex flex-col gap-1 rounded-xl p-4 transition-colors duration-300 hover:bg-sky-100 dark:hover:bg-zinc-800"
+  href={`/posts/${post.slug}`}
+>
+  <h2
+    class="text-2xl font-bold text-sky-900 transition-colors duration-300 dark:text-violet-300"
+  >
+    {post.data.title}
+    <!-- Fun stuff because of limitations in styling on :visited -->
+    <div
+      class="ml-1 inline-flex flex-row items-center gap-1 rounded-xl bg-gray-100 px-3 py-1 text-sm text-gray-100 transition-colors duration-300
+           group-visited:bg-green-500 group-visited:text-white
+           group-hover:bg-sky-100 group-hover:text-sky-100
+           group-visited:group-hover:bg-green-500 group-visited:group-hover:text-white
+           dark:bg-zinc-900 dark:text-zinc-900
+           dark:group-visited:bg-green-600 dark:group-visited:text-white
+           dark:group-hover:bg-zinc-800 dark:group-hover:text-zinc-800
+           dark:group-visited:group-hover:bg-green-600 dark:group-visited:group-hover:text-white"
+      aria-hidden="true"
+    >
+      <Icon name="mdi:check-circle" /> Read
+    </div>
+  </h2>
 
-    h2 {
-        margin-bottom: 0;
+  <div
+    class="flex flex-row gap-1 text-sm italic text-sky-500 transition-colors duration-300 dark:text-blue-500"
+  >
+    <time class="flex flex-row items-center"
+      ><Icon name="mdi:calendar" />{post.data.pubDate.toDateString()}</time
+    >
+    <span class="font-extrabold">·</span>
+    <span class="flex flex-row items-center"
+      ><Icon name="mdi:account" />{post.data.author}</span
+    >
+  </div>
+  <p class="py-4 transition-colors duration-300 dark:text-white">
+    {post.data.description}
+  </p>
+  <div class="flex flex-row flex-wrap gap-2">
+    {
+      post.data.tags.map((tag: string) => (
+        <span class="rounded-lg bg-gray-300 px-3 py-1 transition-colors duration-300 dark:bg-zinc-700 dark:text-white">
+          #{tag}
+        </span>
+      ))
     }
-
-    time {
-        color: var(--muted-font-color);
-    }
-
-    p {
-        margin: 0;
-        color: var(--font-color);
-    }
-</style>
-
-<a href={`/posts/${post.slug}/`}>
-    <h2>{post.data.title}</h2>
-    <time>{post.data.pubDate.toDateString()}</time>
-    <p>{post.data.description}</p>
+  </div>
 </a>

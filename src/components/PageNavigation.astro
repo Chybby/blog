@@ -1,31 +1,32 @@
 ---
-import type { Page } from 'astro'
+import type { Page } from "astro";
+import Button from "./Button.astro";
 
 interface Props {
-    page: Page
+  page: Page;
 }
 
-const { page } = Astro.props
+const { page } = Astro.props;
 
-const pages = Array.from({length: page.lastPage}, (_, i) => i + 1)
+const pages = Array.from({ length: page.lastPage }, (_, i) => i + 1);
 ---
 
-<style>
-	div {
-		display: flex;
-		justify-content: center;
-        gap: 10px;
-	}
+<div class="flex w-fit flex-row gap-2">
+  {page.currentPage != 1 && <Button href={page.url.prev!} text="Previous" />}
 
-    .button.focused {
-        background-color: var(--button-highlight-color);
-    }
-</style>
+  {
+    pages.map((pageNo) => (
+      <Button
+        href={pageNo.toString()}
+        text={pageNo.toString()}
+        highlight={pageNo == page.currentPage}
+      />
+    ))
+  }
 
-<div>
-    {page.currentPage != 1 && <a class="button" href={page.url.prev}>Previous</a>}
-    {pages.map((pageNo) =>
-        <a class={ pageNo == page.currentPage ? "button focused" : "button" } href=`${pageNo}`>{pageNo}</a>
-    )}
-    {page.currentPage != page.lastPage && <a class="button" href={page.url.next}>Next</a>}
+  {
+    page.currentPage != page.lastPage && (
+      <Button href={page.url.next!} text="Next" />
+    )
+  }
 </div>

@@ -1,34 +1,119 @@
 ---
-import Navigation from '@components/Navigation.astro'
-import ThemeIcon from '@components/ThemeIcon.astro'
+import { Icon } from "astro-icon/components";
+
+import Social from "./Social.astro";
+import ThemeIcon from "@components/ThemeIcon.astro";
 
 type Props = Record<string, never>;
 ---
 
-<style>
-    header {
-        height: var(--header-height);
-        padding: 0 20px;
-    }
+<header class="w-full lg:mx-auto lg:max-w-screen-lg">
+  <nav class="flex h-28 w-full flex-row items-center justify-between px-4">
+    <div class="flex flex-row gap-2">
+      <a
+        class="text-4xl font-bold transition-colors duration-300 dark:text-white"
+        href="/">Dome's Blog</a
+      >
 
-    .page-title {
-        margin: auto 0;
-        float: left;
-    }
-
-    header a {
-        text-decoration: none;
-        font-size: 2em;
-        font-weight: bold;
-        color: var(--button-font-color);
-    }
-</style>
-
-<header>
-    <div class="page-title">
-        <a href="/">Dome's Blog</a>
-        <ThemeIcon />
+      <ThemeIcon />
     </div>
 
-    <Navigation />
+    <button
+      type="button"
+      class="text-4xl transition-colors duration-300 dark:text-white md:hidden"
+      id="hamburger"
+    >
+      <span class="sr-only">Open main menu</span>
+      <Icon name="mdi:menu" aria-hidden="true" />
+    </button>
+
+    <div
+      class="absolute right-4 flex -translate-y-60 items-stretch rounded-3xl bg-sky-200 p-2 text-2xl font-bold text-sky-900 transition-all duration-300 ease-in-out dark:bg-violet-950 dark:text-violet-200 md:transform-none"
+    >
+      <a
+        class="flex flex-row items-center rounded-2xl p-4 text-sky-900 transition-colors duration-300 hover:bg-sky-300 dark:text-violet-200 dark:hover:bg-violet-900"
+        href="/tags/"><Icon name="mdi:label-multiple-outline" />Tags</a
+      >
+      <div class="contents text-2xl">
+        <Social
+          url="https://github.com/chybby"
+          icon="mdi:github"
+          description="Github"
+        />
+        <Social
+          url="https://www.linkedin.com/in/achyb/"
+          icon="mdi:linkedin"
+          description="Linkedin"
+        />
+        <Social
+          url="https://chybby.itch.io/"
+          icon="cib:itch-io"
+          description="itch.io"
+        />
+      </div>
+      <a
+        class="flex flex-row items-center rounded-2xl p-4 text-sky-900 transition-colors duration-300 hover:bg-sky-300 dark:text-violet-200 dark:hover:bg-violet-900"
+        href="https://chybby.com"
+      >
+        chybby.com <Icon name="mdi:open-in-new" />
+      </a>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    class="fixed right-0 top-0 z-10 w-full translate-y-[-600px] rounded-b-3xl bg-sky-200 px-4 pb-20 pt-10 text-sky-900 transition-all duration-300 ease-in-out dark:bg-violet-950 dark:text-violet-200 sm:max-w-sm sm:rounded-br-none md:translate-y-[-600px]"
+    id="menu"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="flex flex-col items-center gap-4 text-2xl font-bold">
+      <button
+        type="button"
+        class="self-end text-4xl text-black transition-colors duration-300 dark:text-white"
+        id="close"
+      >
+        <Icon name="mdi:close" aria-hidden="true" />
+      </button>
+      <a
+        class="flex flex-row items-center rounded-2xl p-4 text-sky-900 transition-colors duration-300 hover:bg-sky-300 dark:text-violet-200 dark:hover:bg-violet-900"
+        href="/tags/"><Icon name="mdi:label-multiple-outline" />Tags</a
+      >
+      <div class="flex flex-row gap-4 text-4xl">
+        <Social
+          url="https://github.com/chybby"
+          icon="mdi:github"
+          description="Github"
+        />
+        <Social
+          url="https://www.linkedin.com/in/achyb/"
+          icon="mdi:linkedin"
+          description="Linkedin"
+        />
+        <Social
+          url="https://chybby.itch.io/"
+          icon="cib:itch-io"
+          description="itch.io"
+        />
+      </div>
+      <a
+        class="flex flex-row items-center rounded-2xl p-4 text-sky-900 transition-colors duration-300 hover:bg-sky-300 dark:text-violet-200 dark:hover:bg-violet-900"
+        href="https://chybby.com"
+      >
+        chybby.com <Icon name="mdi:open-in-new" />
+      </a>
+    </div>
+  </div>
 </header>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    document.querySelector("#hamburger")?.addEventListener("click", () => {
+      document.querySelector("#menu")?.classList.toggle("transform-none");
+    });
+
+    document.querySelector("#close")?.addEventListener("click", () => {
+      document.querySelector("#menu")?.classList.toggle("transform-none");
+    });
+  });
+</script>

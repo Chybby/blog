@@ -6,50 +6,39 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 
 interface Props {
-    pageTitle?: string;
-    children: any;
+  pageTitle: string;
+  children: any;
 }
 
 const { pageTitle } = Astro.props;
+
+// TODO: transitions for the menu.
+// TODO: look into aria accessibility
+// TODO: write a blog post
 ---
 
-<style>
-    body {
-        margin: 0 auto;
-        max-width: 80ch;
-        line-height: 1.5;
-    }
-
-    main {
-        padding: 20px;
-        min-height: calc(100vh - var(--header-height) - var(--footer-height));
-    }
-
-</style>
-
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="stylesheet" href="/monokai.css" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{pageTitle || "Dome's Blog"}</title>
-        <ViewTransitions />
-    </head>
-    <body>
-        <Header />
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit&family=Roboto%20Slab"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <ViewTransitions />
+  </head>
+  <body
+    class="flex min-h-screen flex-col bg-gray-100 transition-colors duration-300 dark:bg-zinc-900"
+  >
+    <Header />
 
-        <main>
-            { pageTitle && <h1>{pageTitle}</h1> }
+    <main class="w-full grow p-4 pt-10 lg:mx-auto lg:max-w-screen-lg">
+      <slot />
+    </main>
 
-            <slot />
-        </main>
-
-        <Footer />
-
-        <script>
-            import "@scripts/menu.ts";
-        </script>
-    </body>
+    <Footer />
+  </body>
 </html>

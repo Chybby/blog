@@ -1,27 +1,41 @@
 ---
-import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+import type { InferGetStaticPropsType, GetStaticPaths } from "astro";
 
 import { getCollection } from "astro:content";
 
-import PageNavigation from '@components/PageNavigation.astro';
+import PageNavigation from "@components/PageNavigation.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import BlogPostPreview from '@components/BlogPostPreview.astro';
+import BlogPostPreview from "@components/BlogPostPreview.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
-    const blogPosts = await getCollection("posts");
+  const blogPosts = await getCollection("posts");
 
-    blogPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  blogPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
-    return paginate(blogPosts, {pageSize: 5});
+  return paginate(blogPosts, { pageSize: 5 });
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { page } = Astro.props;
+
+const pageTitle = "All posts";
 ---
 
-<BaseLayout pageTitle="All posts">
-	{page.data.map((post) => <BlogPostPreview post={post} />)}
+<BaseLayout pageTitle={pageTitle}>
+  <h1
+    class="text-center text-4xl font-bold text-sky-900 transition-colors duration-300 dark:text-violet-300"
+  >
+    {pageTitle}
+  </h1>
 
-    <PageNavigation page={page} />
+  {page.data.map((post) => <BlogPostPreview post={post} />)}
+
+  {
+    page.lastPage != 1 && (
+      <div class="flex flex-row justify-center">
+        <PageNavigation page={page} />
+      </div>
+    )
+  }
 </BaseLayout>

@@ -2,17 +2,16 @@
 type Props = Record<string, never>;
 ---
 
-<style>
-  footer {
-    height: var(--footer-height);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: small;
-    color: var(--muted-font-color);
-  }
-</style>
-
-<footer>
-  <p>© {new Date().getFullYear()} Dome - Built with <a href="https://astro.build/">Astro</a></p>
+<footer class="flex h-12 w-full items-center justify-center">
+  <p
+    class="text-sm text-sky-900/60 transition-colors duration-300 dark:text-violet-200/60"
+  >
+    © {new Date().getFullYear()} Dome - Built with
+    <a
+      class="text-sky-500 transition-colors duration-300 dark:text-violet-500"
+      href="https://astro.build/"
+    >
+      Astro</a
+    >
+  </p>
 </footer>

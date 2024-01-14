@@ -1,55 +1,62 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
 
-import Tag from '@components/Tag.astro';
-import BaseLayout from '@layouts/BaseLayout.astro'
+import { Icon } from "astro-icon/components";
+import Tag from "@components/Tag.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
 
 interface Props {
-    post: CollectionEntry<'posts'>;
-    children: any;
+  post: CollectionEntry<"posts">;
+  children: any;
 }
 
 const { post } = Astro.props;
 const frontmatter = post.data;
+
+const pageTitle = frontmatter.title;
 ---
 
-<style>
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .metadata {
-        color: var(--muted-font-color);
-        font-size: 0.9em;
-    }
-
-    .divider {
-        padding: 0 1ch;
-        font-weight: bold;
-    }
-
-    br {
-        display: block;
-        content: "";
-        margin-top: 60px;
-    }
-</style>
-
-<BaseLayout pageTitle={frontmatter.title}>
-    <div class="metadata">
-        <time>{frontmatter.pubDate.toDateString()}</time> <span class="divider">·</span> <span>{frontmatter.author}</span>
+<BaseLayout pageTitle={pageTitle}>
+  <article>
+    <div class="flex flex-col items-center text-center">
+      <h1
+        class="text-5xl text-sky-900 transition-colors duration-300 dark:text-violet-300"
+      >
+        {pageTitle}
+      </h1>
+      <div
+        class="flex flex-row gap-1 italic text-sky-500 transition-colors duration-300 dark:text-blue-500"
+      >
+        <time class="flex flex-row items-center"
+          ><Icon name="mdi:calendar" />{
+            frontmatter.pubDate.toDateString()
+          }</time
+        >
+        <span class="font-extrabold">·</span>
+        <span class="flex flex-row items-center"
+          ><Icon name="mdi:account" />{frontmatter.author}</span
+        >
+      </div>
     </div>
 
-    <br>
+    <img
+      class="m-10 mx-auto rounded-xl"
+      src={frontmatter.image.url}
+      alt={frontmatter.image.alt}
+    />
 
-    <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
-
-    <slot />
-
-    <div class="tags">
-        {frontmatter.tags.map((tag) => (
-            <Tag name={tag} />
-        ))}
+    <div
+      class="prose prose-slate mx-auto font-serif transition-colors duration-300 dark:prose-invert lg:prose-xl prose-headings:text-sky-900 prose-headings:transition-colors prose-headings:duration-300 prose-a:text-sky-900
+           prose-a:transition-colors prose-a:duration-300 prose-blockquote:transition-colors
+           prose-blockquote:duration-300 prose-strong:transition-colors prose-strong:duration-300 prose-code:transition-colors
+             prose-code:duration-300 prose-img:mx-auto prose-img:rounded-xl dark:prose-headings:text-violet-400
+           dark:prose-a:text-violet-400"
+    >
+      <slot />
     </div>
+
+    <div class="not-prose flex flex-row flex-wrap justify-center gap-2 pt-6">
+      {frontmatter.tags.map((tag) => <Tag name={tag} />)}
+    </div>
+  </article>
 </BaseLayout>

@@ -1,27 +1,19 @@
 ---
-import { Icon } from 'astro-icon/components'
+import { Icon } from "astro-icon/components";
 
 interface Props {
-    url: string;
-    icon: string;
+  url: string;
+  icon: string;
+  description: string;
 }
 
-const { url, icon } = Astro.props;
+const { url, icon, description } = Astro.props;
 ---
 
-<style>
-    a {
-        display: flex;
-        font-size: 1.5em;
-        padding: 10px;
-        border-radius: 10px;
-    }
-
-    a [data-icon] {
-        vertical-align: text-top;
-        color: var(--header-font-color);
-    }
-
-</style>
-
-<a class="button" href={url}><Icon name={icon} /></a>
+<a
+  class="flex items-center rounded-2xl p-4 text-sky-900 transition-colors duration-300 hover:bg-sky-300 dark:text-violet-200 dark:hover:bg-violet-900"
+  href={url}
+>
+  <span class="sr-only">{description}</span>
+  <Icon name={icon} />
+</a>

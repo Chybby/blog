@@ -1,0 +1,14 @@
+---
+interface Props {
+  text: string;
+  href: string;
+  highlight?: boolean;
+}
+
+const { text, href, highlight } = Astro.props;
+---
+
+<a
+  class=`block w-fit transition-colors duration-300 rounded-xl ${highlight ? "bg-sky-300 dark:bg-violet-900" : "bg-sky-200 dark:bg-violet-950"} p-3 text-sky-900 hover:bg-sky-300 dark:text-violet-200 dark:hover:bg-violet-900`
+  href={href}>{text}</a
+>
