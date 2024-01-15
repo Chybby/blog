@@ -4,6 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
 import Tag from "@components/Tag.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
 
 interface Props {
   post: CollectionEntry<"posts">;
@@ -39,16 +40,17 @@ const pageTitle = frontmatter.title;
       </div>
     </div>
 
-    <img
-      class="m-10 mx-auto rounded-xl"
+    <Image
       src={frontmatter.image.url}
       alt={frontmatter.image.alt}
+      class="m-10 mx-auto rounded-xl"
     />
 
     <div
-      class="prose prose-slate mx-auto font-serif transition-colors duration-300 dark:prose-invert lg:prose-xl prose-headings:text-sky-900 prose-headings:transition-colors prose-headings:duration-300 prose-a:text-sky-900
-           prose-a:transition-colors prose-a:duration-300 prose-blockquote:transition-colors
-           prose-blockquote:duration-300 prose-strong:transition-colors prose-strong:duration-300 prose-code:transition-colors
+      class="prose prose-slate mx-auto text-justify font-serif transition-colors duration-300
+             dark:prose-invert lg:prose-xl prose-headings:text-sky-900 prose-headings:transition-colors prose-headings:duration-300
+           prose-a:text-sky-900 prose-a:transition-colors prose-a:duration-300 prose-blockquote:transition-colors
+             prose-blockquote:duration-300 prose-strong:transition-colors prose-strong:duration-300 prose-code:transition-colors
              prose-code:duration-300 prose-img:mx-auto prose-img:rounded-xl dark:prose-headings:text-violet-400
            dark:prose-a:text-violet-400"
     >
