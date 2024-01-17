@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 import "@fontsource/outfit";
 import "@fontsource/roboto-slab";
@@ -49,5 +50,6 @@ const { pageTitle } = Astro.props;
     </main>
 
     <Footer />
+    <SpeedInsights />
   </body>
 </html>
