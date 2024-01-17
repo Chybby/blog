@@ -5,9 +5,16 @@ description: How I installed a USB cable onto one of my old SNES controllers.
 author: Dome
 image:
   url: "@images/modified_controller.jpg"
-  alt: My USB SNES controller.
+  alt: My USB SNES controller
 tags: ["arduino", "hardware", "games"]
 ---
+import Figure from '@components/Figure.astro';
+
+import arduino_closeup from '@images/arduino_closeup.jpg';
+import modified_controller_internals from '@images/modified_controller_internals.jpg';
+import original_controller_internals from '@images/original_controller_internals.jpg';
+import original_controller_plug from '@images/original_controller_plug.jpg';
+import support_removal from '@images/support_removal.png';
 
 A few years ago on a trip to Tokyo, we took a day to explore Akihabara.
 We found a shop that was selling retro gaming stuff and when I saw an old SNES controller for sale I had to buy it.
@@ -23,8 +30,8 @@ After a bit of Googling I found [this document](https://gamefaqs.gamespot.com/sn
 
 Luckily I now have another unmodified SNES controller so I can take some pictures of the original hardware.
 
-![The plug of the unmodified SNES controller](@images/original_controller_plug.jpg)
-*The plug of the unmodified SNES controller*
+<Figure src={original_controller_plug}
+        caption="The plug of the unmodified SNES controller." />
 
 The pins of the plug from left to right are:
 
@@ -37,8 +44,8 @@ The pins of the plug from left to right are:
 | 5, 6 | Nothing        | No wire              |
 | 7    | Ground         | Brown                |
 
-![Inside the unmodified SNES controller](@images/original_controller_internals.jpg)
-*Inside the unmodified SNES controller*
+<Figure src={original_controller_internals}
+        caption="Inside the unmodified SNES controller." />
 
 Pins 2 and 3 are driven by the console and begin high and low respectively. Pin 4 is driven by the controller.
 
@@ -66,8 +73,8 @@ I connected the wires inside the SNES controller to the pins of the board:
 | Orange               | 15          |
 | Red                  | 16          |
 
-![Close-up of the Arduino installed in the modified SNES controller](@images/arduino_closeup.jpg)
-*The board installed in the modified SNES controller.*
+<Figure src={arduino_closeup}
+        caption="The board installed in the modified SNES controller." />
 
 Coding up the button scanning process on the Arduino looks like this:
 
@@ -217,13 +224,13 @@ After making sure the computer was recognising the Arduino as a HID gamepad and 
 
 At this point I tried putting the Arduino into the controller and closing it back up but there wasn't enough room for the board and the cable so I had to remove parts of the supports on the back cover.
 
-![Removing some of the supports from the inside of the SNES controller to make room](@images/support_removal.png)
-*Making room inside the controller by removing some supports from the back cover.*
+<Figure src={support_removal}
+        caption="Making room inside the controller by removing some supports from the back cover." />
 
 Now the Arduino just about fit inside.
 
-![Inside the modified SNES controller](@images/modified_controller_internals.jpg)
-*Inside the modified SNES controller.*
+<Figure src={modified_controller_internals}
+        caption="Inside the modified SNES controller." />
 
 To celebrate, I played a race of Super Mario Kart with that authentic controller experience! 🏎️🏎️🏎️🏁
 

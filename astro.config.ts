@@ -3,11 +3,12 @@ import icon from "astro-icon";
 import expressiveCode from "astro-expressive-code";
 import type { AstroExpressiveCodeOptions } from "astro-expressive-code";
 import tailwind from "@astrojs/tailwind";
+import mdx from "@astrojs/mdx";
 
 const astroExpressiveCodeOptions: AstroExpressiveCodeOptions = {
   themes: ["monokai"],
   styleOverrides: {
-    codeFontFamily: ["Jetbrains Mono", "monospace"],
+    codeFontFamily: "'Jetbrains Mono', ui-monospace, Consolas, monospace",
   },
 };
 
@@ -23,5 +24,6 @@ export default defineConfig({
     }),
     expressiveCode(astroExpressiveCodeOptions),
     tailwind(),
+    mdx(),
   ],
 });
