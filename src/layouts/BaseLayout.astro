@@ -18,8 +18,35 @@ interface Props {
 const { pageTitle } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" class="preload">
   <head>
+    <!-- Set light/dark theme as quickly as possible. -->
+    <script is:inline>
+      function setDarkMode(document) {
+        if (
+          localStorage.theme === "dark" ||
+          (!("theme" in localStorage) &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      }
+
+      setDarkMode(document);
+
+      // Enable CSS transitions after page load.
+      document.addEventListener("astro:page-load", (ev) => {
+        document.documentElement.classList.remove("preload");
+      });
+
+      // Need to set theme again after every swap.
+      document.addEventListener("astro:before-swap", (ev) => {
+        setDarkMode(ev.newDocument);
+      });
+    </script>
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-610QNE04JS"
     ></script>
     <script is:inline>

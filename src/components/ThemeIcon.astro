@@ -13,28 +13,6 @@ type Props = Record<string, never>;
   <Icon class="hidden dark:block" name="mdi:weather-night" aria-hidden="true" />
 </button>
 
-<!-- Set light/dark theme based on preference. -->
-<script is:inline>
-  function setDarkMode(document) {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }
-
-  setDarkMode(document);
-
-  document.addEventListener("astro:before-swap", (ev) => {
-    setDarkMode(ev.newDocument);
-  });
-</script>
-
-<!-- Handle toggling light/dark theme. -->
 <script>
   document.addEventListener("astro:page-load", () => {
     const handleToggleClick = () => {
